@@ -34,6 +34,9 @@ There are few explcitly reason where customer would rather use APIM for exposng 
 
 ![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/f96a9e03-fb3f-4e16-bcab-b6da418951e6)
 
+![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/900a5d46-326b-4dc7-aa93-2082f22238c3)
+
+
 * Once Inbound policies for managed identity is confgured , Simulate test within APIM with traces enabled for verbose logging & you would notice managed identity being used to get bearer token
 
 ![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/8e897003-080a-4dde-b5aa-7e60831c6ab0)
