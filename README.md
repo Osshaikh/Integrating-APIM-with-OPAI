@@ -7,9 +7,68 @@ There are few explcitly reason where customer would rather use APIM for exposng 
 * load balancing across multiple backend openai endpoints
 * Monitor Az OPAI JWT token consumption to keep track on pricing
 
-* All APIM policies used in this demo will be shared in last section of page
 
-To Get started these solution you would need to have APIM instance and atleast two Az OPAI service deployed
+
+----------------------------------------------------------------------------------------------------------
+* All APIM policies used in this demo is listed here
+--> Managed identity & Rate Limiting Inbound APIM policies 
+  <inbound>
+        <base />
+        <!-- Inbound -->
+<rate-limit-by-key calls="1000" renewal-period="60" counter-key="@(context.Request.IpAddress)" />
+        <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+
+--> Random Load Balancing  algorithm for Inbound policies
+<policies>
+    <inbound>
+        <base />
+        <!-- Inbound -->
+        <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
+        <set-variable name="urlId" value="@(new Random(context.RequestId.GetHashCode()).Next(1, 3))" />
+        <choose>
+            <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 1)">
+                <set-backend-service base-url="{{backend-url-1}}" />
+            </when>
+            <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 2)">
+                <set-backend-service base-url="{{backend-url-2}}" />
+            </when>
+            <otherwise>
+                <!-- Should never happen, but you never know ;) -->
+                <return-response>
+                    <set-status code="500" reason="InternalServerError" />
+                    <set-header name="Microsoft-Azure-Api-Management-Correlation-Id" exists-action="override">
+                        <value>@{return Guid.NewGuid().ToString();}</value>
+                    </set-header>
+                    <set-body>A gateway-related error occurred while processing the request.</set-body>
+                </return-response>
+            </otherwise>
+        </choose>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies> 
+
+
+
+
+-->To Get started these solution you would need to have APIM instance and atleast two Az OPAI service deployed
 
 * Az OPAI provide two way of authentication i.e. API Keys & Azure AD Authentication, in this demo we are going to use latter in integration with APIM
 * Enable managed identity on APIM and assign RBAC 'Cognitive Service User' on the respective OpenAI services
