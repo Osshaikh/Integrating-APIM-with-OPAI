@@ -34,8 +34,6 @@ There are few explcitly reason where customer would rather use APIM for exposng 
 
 ![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/f96a9e03-fb3f-4e16-bcab-b6da418951e6)
 
-![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/900a5d46-326b-4dc7-aa93-2082f22238c3)
-
 
 * Once Inbound policies for managed identity is confgured , Simulate test within APIM with traces enabled for verbose logging & you would notice managed identity being used to get bearer token
 
@@ -47,13 +45,16 @@ There are few explcitly reason where customer would rather use APIM for exposng 
 
 ![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/6bcb248c-9825-434e-b42e-c1179b32f99f)
 
+![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/6c8aa210-a651-4654-bbe9-5041dc037679)
+
+
 * Once Inbound policies is configured for load balancing along with managed identity , you can verify header details from response that request is answered by different OpenAI model for each request. Also note that both API request is not using any authentcation methord, All Auth handled by APIM itself
 
 ![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/eedf589b-8549-4072-9d53-f974896fe682)
 
 ![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/12706cbb-4994-4c98-b1e8-6dee4a4c0f15)
 
-* Since APIM handle authentication on behalf of client request ,to restrict that only legitimate request should get response then we will have enable APIM Subscripiton keys as mandatory pparameters in client request. Once its enable only request that contains APIM subscripiton keys will received response, all other request will get access denied error
+* Since APIM handle authentication on behalf of client request ,to restrict that only legitimate request should get response then we will have enable APIM Subscripiton keys as mandatory parameters in client request. Once its enable only request that contains APIM subscripiton keys will received response, all other request will get access denied error
 
 ![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/7fe03867-f30a-4228-8d6e-134f365d9ae7)
 
