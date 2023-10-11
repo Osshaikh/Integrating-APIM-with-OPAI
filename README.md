@@ -70,55 +70,8 @@ There are few explcitly reason where customer would rather use APIM for exposng 
 * All APIM policies used in this demo is listed here
   
 * --> Managed identity & Rate Limiting Inbound APIM policies 
-  <inbound>
-        <base />
-        <!-- Inbound -->
-<rate-limit-by-key calls="1000" renewal-period="60" counter-key="@(context.Request.IpAddress)" />
-        <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
-    </inbound>
-    <backend>
-        <base />
-    </backend>
-    <outbound>
-        <base />
-    </outbound>
-    <on-error>
-        <base />
-    </on-error>
+![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/094e3a38-38fd-4c73-8c32-75c9ff6692d3)
 
 --> Random Load Balancing  algorithm for Inbound policies
-<policies>
-    <inbound>
-        <base />
-        <!-- Inbound -->
-        <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
-        <set-variable name="urlId" value="@(new Random(context.RequestId.GetHashCode()).Next(1, 3))" />
-        <choose>
-            <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 1)">
-                <set-backend-service base-url="{{backend-url-1}}" />
-            </when>
-            <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 2)">
-                <set-backend-service base-url="{{backend-url-2}}" />
-            </when>
-            <otherwise>
-                <!-- Should never happen, but you never know ;) -->
-                <return-response>
-                    <set-status code="500" reason="InternalServerError" />
-                    <set-header name="Microsoft-Azure-Api-Management-Correlation-Id" exists-action="override">
-                        <value>@{return Guid.NewGuid().ToString();}</value>
-                    </set-header>
-                    <set-body>A gateway-related error occurred while processing the request.</set-body>
-                </return-response>
-            </otherwise>
-        </choose>
-    </inbound>
-    <backend>
-        <base />
-    </backend>
-    <outbound>
-        <base />
-    </outbound>
-    <on-error>
-        <base />
-    </on-error>
-</policies> 
+![image](https://github.com/Osshaikh/Integrating-APIM-with-OPAI/assets/44756471/900f096a-ed8e-491e-b87f-aa1451cee152)
+
