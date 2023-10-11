@@ -11,7 +11,9 @@ There are few explcitly reason where customer would rather use APIM for exposng 
 
 ----------------------------------------------------------------------------------------------------------
 * All APIM policies used in this demo is listed here
---> Managed identity & Rate Limiting Inbound APIM policies 
+*
+*
+* --> Managed identity & Rate Limiting Inbound APIM policies 
   <inbound>
         <base />
         <!-- Inbound -->
