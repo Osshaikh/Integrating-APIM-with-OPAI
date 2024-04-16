@@ -3,6 +3,7 @@
 <policies>
     <inbound>
         <base />
+        <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
         <set-variable name="urlId" value="@(new Random(context.RequestId.GetHashCode()).Next(1, 3))" />
         <choose>
             <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 1)">
